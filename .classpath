@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="/usr/share/java/org.OpenNI.jar"/>
 	<classpathentry kind="lib" path="/socket_input/server/lib/servlet-api-3.0.jar"/>
 	<classpathentry kind="lib" path="/socket_input/server/lib/jetty-all-8.0.4.v20111024.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

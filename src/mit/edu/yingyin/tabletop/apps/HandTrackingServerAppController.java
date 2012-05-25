@@ -1,10 +1,14 @@
 package mit.edu.yingyin.tabletop.apps;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.OpenNI.GeneralException;
+import org.eclipse.jetty.util.ajax.JSON;
 import org.eclipse.jetty.websocket.WebSocket.Connection;
+
+import com.google.gson.Gson;
 
 import edu.mit.yingyin.tabletop.models.HandTracker.FingerEvent;
 import edu.mit.yingyin.tabletop.models.HandTrackingEngine;
@@ -53,6 +57,7 @@ public class HandTrackingServerAppController {
 
     private HandTrackingThread handTrackingThread;
     private Connection connection;
+    private Gson gson = new Gson();
     
     public HandInputListener(HandTrackingThread handTrackingThread) {
       this.handTrackingThread = handTrackingThread;
@@ -71,8 +76,12 @@ public class HandTrackingServerAppController {
 
     @Override
     public void fingerPressed(List<FingerEvent> feList) {
-      // TODO Auto-generated method stub
-      
+      String json = gson.toJson(feList);
+      try {
+        connection.sendMessage(json);
+      } catch (IOException e) {
+        logger.severe(e.getMessage());
+      }
     }
     
   }
@@ -93,6 +102,7 @@ public class HandTrackingServerAppController {
       handTrackingThread.join();
     } catch (Exception e) {
       logger.severe(e.getMessage());
+      System.exit(-1);
     }
   }
 }
