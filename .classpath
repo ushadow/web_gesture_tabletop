@@ -6,7 +6,12 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/tabletop_kinect"/>
 	<classpathentry kind="lib" path="/usr/share/java/org.OpenNI.jar"/>
 	<classpathentry kind="lib" path="/socket_input/server/lib/servlet-api-3.0.jar"/>
-	<classpathentry kind="lib" path="/socket_input/server/lib/jetty-all-8.0.4.v20111024.jar"/>
-	<classpathentry kind="lib" path="lib/gson-2.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="/socket_input/server/lib/jetty-websocket-8.1.5.v20120716.jar"/>
+	<classpathentry kind="lib" path="/socket_input/server/lib/jetty-server-8.1.5.v20120716.jar"/>
+	<classpathentry kind="lib" path="/socket_input/server/lib/jetty-http-8.1.5.v20120716.jar"/>
+	<classpathentry kind="lib" path="/socket_input/server/lib/jetty-continuation-8.1.5.v20120716.jar"/>
+	<classpathentry kind="lib" path="/socket_input/server/lib/jetty-io-8.1.5.v20120716.jar"/>
+	<classpathentry kind="lib" path="/socket_input/server/lib/jetty-util-8.1.5.v20120716.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

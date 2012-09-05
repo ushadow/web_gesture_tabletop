@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.OpenNI.GeneralException;
-import org.eclipse.jetty.util.ajax.JSON;
 import org.eclipse.jetty.websocket.WebSocket.Connection;
 
 import com.google.gson.Gson;
