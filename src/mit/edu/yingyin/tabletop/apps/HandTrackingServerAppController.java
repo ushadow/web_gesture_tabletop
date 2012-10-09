@@ -15,6 +15,11 @@ import edu.mit.yingyin.tabletop.models.HandTrackingEngine.IHandEventListener;
 import edu.mit.yingyin.websocket.IInputListener;
 import edu.mit.yingyin.websocket.InputServer;
 
+/**
+ * Application controller for running a handtracking server.
+ * @author yingyin
+ *
+ */
 public class HandTrackingServerAppController {
  
   private static class HandTrackingThread extends Thread {
@@ -22,15 +27,19 @@ public class HandTrackingServerAppController {
         "/afs/csail/u/y/yingyin/research/kinect/";
     private static final String OPENNI_CONFIG_FILE = 
         MAIN_DIR + "config/config.xml";
-    private static final String CALIB_FILE = MAIN_DIR + "data/calibration.txt";
+    private static final String CALIB_FILE = MAIN_DIR + 
+        "data/calibration/calibration.txt";
+    private static final int DEFAULT_MAX_DEPTH = 1600;
     
     private HandTrackingEngine engine;
     
     public HandTrackingThread() {
       try {
-        engine = new HandTrackingEngine(OPENNI_CONFIG_FILE, CALIB_FILE);
+        engine = new HandTrackingEngine(OPENNI_CONFIG_FILE, CALIB_FILE, 
+            DEFAULT_MAX_DEPTH);
       } catch (GeneralException e) {
         logger.severe(e.getMessage());
+        e.printStackTrace();
         System.exit(-1);
       }
     }
