@@ -1,4 +1,4 @@
-package mit.edu.yingyin.tabletop.apps;
+package edu.mit.yingyin.tabletop.apps;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +20,7 @@ import edu.mit.yingyin.websocket.InputServer;
  * @author yingyin
  *
  */
-public class HandTrackingServerAppController {
+public class HandInputServerAppController {
  
   private static class HandTrackingThread extends Thread {
     private static final String MAIN_DIR = 
@@ -95,7 +95,7 @@ public class HandTrackingServerAppController {
   }
 
   private static Logger logger = Logger.getLogger(
-      HandTrackingServerAppController.class.getName());
+      HandInputServerAppController.class.getName());
   
   public static void main(String... args) {
     try {
