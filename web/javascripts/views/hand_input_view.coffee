@@ -7,6 +7,8 @@ class HandInputView
     @$button = $('button')
     @$button.click => @onButtonClick()
     @canvas = document.getElementById 'canvas'
+    @canvas.width = window.innerWidth - @canvas.offsetLeft * 2
+    @canvas.height = window.innerHeight - @canvas.offsetTop
     @canvasHeight = @canvas.clientHeight
     @canvasWidth = @canvas.clientWidth
 
