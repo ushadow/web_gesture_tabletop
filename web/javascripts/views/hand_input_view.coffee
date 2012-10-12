@@ -1,5 +1,7 @@
 class HandInputView
   constructor: ->
+    @rectWidth = 30
+
     @onConnect = ->
     @onDisconnect = ->
 
@@ -29,7 +31,7 @@ class HandInputView
     context.clearRect 0, 0, @canvasWidth, @canvasHeight
     context.fillStyle = '#ff0000'
     [canvasX, canvasY] = @screenToCanvasCoord x, y
-    context.fillRect canvasX, canvasY, 10, 10
+    context.fillRect canvasX, canvasY, @rectWidth, @rectWidth
 
   onButtonClick: ->
     if @$button.html() is 'Connect'
