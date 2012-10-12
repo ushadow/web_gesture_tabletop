@@ -34,5 +34,5 @@ class TestController
     json = JSON.parse data
     if json[0].posDisplay?
       @hand.x = parseInt(json[0].posDisplay.x)
-      @hand.y = parseInt(json[0].posDispaly.y)
+      @hand.y = parseInt(json[0].posDisplay.y)
     @view.showInfo status

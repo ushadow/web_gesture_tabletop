@@ -9,6 +9,7 @@ import org.eclipse.jetty.websocket.WebSocket.Connection;
 
 import com.google.gson.Gson;
 
+import edu.mit.yingyin.tabletop.controllers.ProcessPacketController;
 import edu.mit.yingyin.tabletop.models.HandTracker.FingerEvent;
 import edu.mit.yingyin.tabletop.models.HandTrackingEngine;
 import edu.mit.yingyin.tabletop.models.HandTrackingEngine.IHandEventListener;
@@ -16,7 +17,7 @@ import edu.mit.yingyin.websocket.IInputListener;
 import edu.mit.yingyin.websocket.InputServer;
 
 /**
- * Application controller for running a handtracking server.
+ * Application controller for running a hand tracking server.
  * @author yingyin
  *
  */
@@ -24,11 +25,15 @@ public class HandInputServerAppController {
   private static final String DEFAULT_MAIN_DIR = ".";
 
   private static class HandTrackingThread extends Thread {
+    private static final Logger logger = Logger.getLogger(
+        HandTrackingThread.class.getName());
     private static final String OPENNI_CONFIG_FILE = "/config/config.xml";
-    private static final String CALIB_FILE = "/data/calibration/calibration.txt";
+    private static final String CALIB_FILE = 
+        "/data/calibration/calibration.txt";
     private static final int DEFAULT_MAX_DEPTH = 1600;
 
     private HandTrackingEngine engine;
+    private ProcessPacketController packetController; 
 
     /**
      * Constructor.
@@ -38,8 +43,11 @@ public class HandInputServerAppController {
     public HandTrackingThread(String mainDir) {
       try {
         engine = new HandTrackingEngine(mainDir + OPENNI_CONFIG_FILE,
-            mainDir + CALIB_FILE,
-            DEFAULT_MAX_DEPTH);
+            mainDir + CALIB_FILE, DEFAULT_MAX_DEPTH);
+        packetController = new ProcessPacketController(
+            engine.depthWidth(), engine.depthHeight(), null);
+        packetController.showDepthImage(false);
+        packetController.showDiagnosticImage(false);
       } catch (GeneralException e) {
         logger.severe(e.getMessage());
         e.printStackTrace();
@@ -49,8 +57,13 @@ public class HandInputServerAppController {
 
     @Override
     public void run() {
-      while (true) {
+      while (!engine.isDone()) {
         engine.step();
+        try {
+          packetController.show(engine.packet());
+        } catch (GeneralException ge) {
+          logger.severe(ge.getMessage());
+        }
       }
     }
     

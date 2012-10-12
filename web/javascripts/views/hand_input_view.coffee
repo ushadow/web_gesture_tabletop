@@ -42,6 +42,8 @@ class HandInputView
   # @param {int} x screen coordinate where top left is the origin.
   # @param {int} y screen coordinate where top left is the origin.
   screenToCanvasCoord: (x, y) ->
+    # window.screenX and window.screenY are the position of the browser window
+    # on the screen.
     canvasX = x - window.screenX - (window.outerWidth - window.innerWidth) -
       @canvas.offsetLeft
     canvasY = y - window.screenY - (window.outerHeight - window.innerHeight) -
