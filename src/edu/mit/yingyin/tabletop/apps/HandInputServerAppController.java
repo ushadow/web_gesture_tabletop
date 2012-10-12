@@ -21,21 +21,24 @@ import edu.mit.yingyin.websocket.InputServer;
  *
  */
 public class HandInputServerAppController {
- 
+  private static final String DEFAULT_MAIN_DIR = ".";
+
   private static class HandTrackingThread extends Thread {
-    private static final String MAIN_DIR = 
-        "/afs/csail/u/y/yingyin/research/kinect/";
-    private static final String OPENNI_CONFIG_FILE = 
-        MAIN_DIR + "config/config.xml";
-    private static final String CALIB_FILE = MAIN_DIR + 
-        "data/calibration/calibration.txt";
+    private static final String OPENNI_CONFIG_FILE = "/config/config.xml";
+    private static final String CALIB_FILE = "/data/calibration/calibration.txt";
     private static final int DEFAULT_MAX_DEPTH = 1600;
-    
+
     private HandTrackingEngine engine;
-    
-    public HandTrackingThread() {
+
+    /**
+     * Constructor.
+     *
+     * @param mainDir the main directory of the configuration and data files.
+     */
+    public HandTrackingThread(String mainDir) {
       try {
-        engine = new HandTrackingEngine(OPENNI_CONFIG_FILE, CALIB_FILE, 
+        engine = new HandTrackingEngine(mainDir + OPENNI_CONFIG_FILE,
+            mainDir + CALIB_FILE,
             DEFAULT_MAX_DEPTH);
       } catch (GeneralException e) {
         logger.severe(e.getMessage());
@@ -96,14 +99,17 @@ public class HandInputServerAppController {
 
   private static Logger logger = Logger.getLogger(
       HandInputServerAppController.class.getName());
-  
+
   public static void main(String... args) {
+    String mainDir = DEFAULT_MAIN_DIR;
+    if (args.length == 1)
+      mainDir = args[0];
     try {
       int port = 8081;
-      HandTrackingThread handTrackingThread = new HandTrackingThread();
+      HandTrackingThread handTrackingThread = new HandTrackingThread(mainDir);
       IInputListener inputListener = new HandInputListener(
           handTrackingThread);
-      InputServer inputServer = new InputServer(port, inputListener); 
+      InputServer inputServer = new InputServer(port, inputListener);
       handTrackingThread.start();
       inputServer.start();
       inputServer.join();
