@@ -1,4 +1,4 @@
-A web application that uses gesture as input.
+A web application that uses gesture as input on a tabletop.
 
 # OS
 
